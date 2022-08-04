@@ -5,6 +5,7 @@
 
 #include "Util.hpp"
 #include "Body.hpp"
+#include "ObjectManager.hpp"
 
 class Game {
 
@@ -22,6 +23,7 @@ private:
 	sf::Clock gClock;
 
 	Input inputSystem;
+	ObjectManager objMgr;
 
 public:
 	void mainLoop();

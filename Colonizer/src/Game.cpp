@@ -7,17 +7,16 @@
 #include <SFML/Graphics/Text.hpp>
 
 Game::Game() :
-	gWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Title", sf::Style::Close)),
+	gWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Title", sf::Style::Close, sf::ContextSettings(0, 0, 2))),
 	gCamera(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)),
-	inputSystem(&gWindow, &gCamera)
+	inputSystem(&gWindow, &gCamera),
+	objMgr(&objectsToDraw)
 {
 	gWindow.setFramerateLimit(60);
 }
 
 void Game::mainLoop() {
 	gClock.restart();
-	Body b(200.f, sf::Vector2f(250, 250));
-	objectsToDraw.push_back(&b);
 
 	while(gWindow.isOpen()) {
 		while(inputSystem.pollEvent()) {
