@@ -1,5 +1,6 @@
 #include "constants.hpp"
 #include "Game.hpp"
+#include "Object.hpp"
 #include "Body.hpp"
 #include "Util.hpp"
 
@@ -13,6 +14,7 @@ Game::Game() :
 	objMgr(&objectsToDraw)
 {
 	gWindow.setFramerateLimit(60);
+	Object::inputSystem = &inputSystem;
 }
 
 void Game::mainLoop() {
@@ -41,6 +43,11 @@ void Game::mainLoop() {
 
 void Game::respondEvents() {
 	sf::Event buffer = inputSystem.getEvent();
+
+	for(auto& a : objectsToDraw) {
+		a->respondEvents(buffer);
+	}
+
 	switch(buffer.type) {
 		case sf::Event::Closed:
 			gWindow.close();

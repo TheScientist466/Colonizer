@@ -23,3 +23,5 @@ public:
 	bool pollEvent();
 	sf::Event getEvent();
 };
+
+float getDistSq(sf::Vector2f a, sf::Vector2f b);

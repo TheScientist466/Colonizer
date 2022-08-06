@@ -1,5 +1,7 @@
 #include "Util.hpp"
 
+#include <cmath>
+
 Input::Input(sf::RenderWindow* _w, sf::View* _v) :
 	windowPtr(_w),
 	worldViewPtr(_v)
@@ -21,4 +23,8 @@ bool Input::pollEvent() {
 
 sf::Event Input::getEvent() {
 	return windowEvents;
+}
+
+float getDistSq(sf::Vector2f a, sf::Vector2f b) {
+	return powf(a.x - b.x, 2) + powf(a.y - b.y, 2);
 }
