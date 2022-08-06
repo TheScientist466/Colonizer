@@ -25,3 +25,5 @@ public:
 };
 
 float getDistSq(sf::Vector2f a, sf::Vector2f b);
+
+int getRandBetween(int min, int max);

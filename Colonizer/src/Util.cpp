@@ -1,6 +1,9 @@
 #include "Util.hpp"
 
 #include <cmath>
+#include <random>
+
+std::mt19937 rng(time(0));
 
 Input::Input(sf::RenderWindow* _w, sf::View* _v) :
 	windowPtr(_w),
@@ -27,4 +30,18 @@ sf::Event Input::getEvent() {
 
 float getDistSq(sf::Vector2f a, sf::Vector2f b) {
 	return powf(a.x - b.x, 2) + powf(a.y - b.y, 2);
+}
+
+int getRandBetween(int min, int max) {
+	//int randNum = rand() % (max - min + 1) + min;
+	//return randNum;
+
+	
+	std::uniform_int_distribution<int> gen(min, max); // uniform, unbiased
+	int r = gen(rng);
+	return r;
+}
+
+void initUtil() {
+	//rng(time(0));
 }

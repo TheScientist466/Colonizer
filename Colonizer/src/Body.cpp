@@ -20,6 +20,9 @@ Body::Body(float _rad, sf::Vector2f _pos, std::string _name) :
 	hitbox.left = _pos.x - _rad;
 	hitbox.height = _rad * 2;
 	hitbox.width = _rad * 2;
+
+	rotationSpeed = getRandBetween(30, 180);
+	rotationSpeed *= getRandBetween(-100, 100) < 0 ? -1 : 1;
 }
 
 sf::CircleShape* Body::getShape() {
@@ -27,7 +30,7 @@ sf::CircleShape* Body::getShape() {
 }
 
 void Body::update() {
-	shape.rotate(60.f * deltaTime.asSeconds());
+	shape.rotate(rotationSpeed * deltaTime.asSeconds());
 
 	hitbox.top = shape.getPosition().y - shape.getRadius();
 	hitbox.left = shape.getPosition().x - shape.getRadius();

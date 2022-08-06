@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <array>
 
 #include "Util.hpp"
 #include "Body.hpp"
@@ -20,7 +21,11 @@ private:
 	sf::RenderWindow gWindow;
 	sf::View gCamera;
 	sf::Vector2i gCameraDir;
+	float gCameraSpeed = 400.f;
 	sf::Clock gClock;
+
+	sf::Font uiFont;
+	std::array<sf::Text, 2> gCameraPosUI;
 
 	Input inputSystem;
 	ObjectManager objMgr;

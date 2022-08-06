@@ -12,6 +12,8 @@ public:
 
 private:
 	float radius;
+	float rotationSpeed;
+
 	sf::CircleShape shape;
 
 public:

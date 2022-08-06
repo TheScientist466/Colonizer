@@ -9,7 +9,7 @@
 class ObjectManager {
 
 private:
-	const unsigned int numOfPlanets = 20;
+	const unsigned int numOfPlanets = 200;
 	
 	std::vector<Body> planets;
 	Body sun;

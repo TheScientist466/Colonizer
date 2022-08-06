@@ -5,6 +5,7 @@
 #include "Util.hpp"
 
 #include <iostream>
+#include <string>
 #include <SFML/Graphics/Text.hpp>
 
 Game::Game() :
@@ -15,6 +16,23 @@ Game::Game() :
 {
 	gWindow.setFramerateLimit(60);
 	Object::inputSystem = &inputSystem;
+	
+	gCamera.setCenter(sf::Vector2f(0, 0));
+
+	uiFont.loadFromFile("./Assets/Alice-Regular.ttf");
+
+	gCameraPosUI[0].setFont(uiFont);
+	gCameraPosUI[1].setFont(uiFont);
+	gCameraPosUI[0].setCharacterSize(32);
+	gCameraPosUI[1].setCharacterSize(32);
+	gCameraPosUI[0].setPosition(20, 20);
+	gCameraPosUI[1].setPosition(120, 20);
+	gCameraPosUI[0].setFillColor(sf::Color::White);
+	gCameraPosUI[1].setFillColor(sf::Color::White);
+
+	uiElements.push_back(&gCameraPosUI[0]);
+	uiElements.push_back(&gCameraPosUI[1]);
+
 }
 
 void Game::mainLoop() {
@@ -64,21 +82,24 @@ void Game::respondEvents() {
 void Game::cameraMovement(sf::Keyboard::Key _k, bool _isReleased) {
 	int inv = _isReleased ? 1 : -1;
 
-	if(_k == sf::Keyboard::W)
+	if(_k == sf::Keyboard::W || _k == sf::Keyboard::Up)
 		gCameraDir += UP_VECTOR2 * inv;
-	else if(_k == sf::Keyboard::S)
+	else if(_k == sf::Keyboard::S || _k == sf::Keyboard::Down)
 		gCameraDir += DOWN_VECTOR2 * inv;
 
-	if(_k == sf::Keyboard::A)
+	if(_k == sf::Keyboard::A || _k == sf::Keyboard::Left)
 		gCameraDir += RIGHT_VECTOR2 * inv;
-	else if(_k == sf::Keyboard::D)
+	else if(_k == sf::Keyboard::D || _k == sf::Keyboard::Right)
 		gCameraDir += LEFT_VECTOR2 * inv;
 
 	gCameraDir = sf::Vector2i(std::clamp(gCameraDir.x, -1, 1), std::clamp(gCameraDir.y, -1, 1));
 }
 
 void Game::update() {
-	gCamera.move(static_cast<sf::Vector2f>(gCameraDir));
+	gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
+
+	gCameraPosUI[0].setString(std::to_string((int)gCamera.getCenter().x));
+	gCameraPosUI[1].setString(std::to_string((int)gCamera.getCenter().y));
 
 	for(auto& i : objectsToDraw)
 		i->update();
