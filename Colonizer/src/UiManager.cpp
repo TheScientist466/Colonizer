@@ -7,7 +7,7 @@ UiManager::UiManager(sf::RenderWindow* w, sf::View* _camView) :
 	camView(_camView)
 {
 	uiFont.loadFromFile("./Assets/Alice-Regular.ttf");
-	this->addDynamicText(&framerate, sf::Vector2f(gWindowPtr->getSize().x - 120, 20));
+	this->addDynamicText(&framerate, sf::Vector2f(20, 70));
 	this->addDynamicText(&camPos[0], sf::Vector2f(20, 20));
 	this->addDynamicText(&camPos[1], sf::Vector2f(120, 20));
 }
@@ -22,7 +22,7 @@ void UiManager::draw() {
 
 void UiManager::update() {
 
-	framerate = std::to_string((int)(1.f / deltaTime.asSeconds()));
+	framerate = std::to_string((int)(1 / deltaTime.asSeconds()));
 	camPos[0] = std::to_string((int)camView->getCenter().x);
 	camPos[1] = std::to_string((int)camView->getCenter().y);
 

@@ -8,6 +8,7 @@
 #include "Body.hpp"
 #include "ObjectManager.hpp"
 #include "UiManager.hpp"
+#include "Minimap.hpp"
 
 class Game {
 
@@ -23,6 +24,8 @@ private:
 	sf::Vector2i gCameraDir;
 	float gCameraSpeed = 400.f;
 	sf::Clock gClock;
+
+	Minimap minimap;
 
 	UiManager uiMgr;
 	Input inputSystem;

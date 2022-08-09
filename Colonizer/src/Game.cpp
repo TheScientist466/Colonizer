@@ -14,7 +14,8 @@ Game::Game() :
 	gCamera(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)),
 	inputSystem(&gWindow, &gCamera),
 	objMgr(&objectsToDraw),
-	uiMgr(&gWindow, &gCamera)
+	uiMgr(&gWindow, &gCamera),
+	minimap(&objectsToDraw, &gCamera)
 {
 	gWindow.setFramerateLimit(60);
 	Object::inputSystem = &inputSystem;
@@ -39,6 +40,7 @@ void Game::mainLoop() {
 		gWindow.setView(gWindow.getDefaultView());
 
 		uiMgr.draw();
+		gWindow.draw(*minimap.getShape());
 
 		gWindow.display();
 		Object::deltaTime = gClock.restart();
@@ -89,6 +91,6 @@ void Game::update() {
 
 	for(auto& i : objectsToDraw)
 		i->update();
-
+	minimap.update();
 	uiMgr.update();
 }
