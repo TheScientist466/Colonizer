@@ -3,36 +3,23 @@
 #include "Object.hpp"
 #include "Body.hpp"
 #include "Util.hpp"
+#include "UiManager.hpp"
 
 #include <iostream>
 #include <string>
-#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics.hpp>
 
 Game::Game() :
 	gWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Title", sf::Style::Close, sf::ContextSettings(0, 0, 2))),
 	gCamera(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)),
 	inputSystem(&gWindow, &gCamera),
-	objMgr(&objectsToDraw)
+	objMgr(&objectsToDraw),
+	uiMgr(&gWindow, &gCamera)
 {
 	gWindow.setFramerateLimit(60);
 	Object::inputSystem = &inputSystem;
 	
 	gCamera.setCenter(sf::Vector2f(0, 0));
-
-	uiFont.loadFromFile("./Assets/Alice-Regular.ttf");
-
-	gCameraPosUI[0].setFont(uiFont);
-	gCameraPosUI[1].setFont(uiFont);
-	gCameraPosUI[0].setCharacterSize(32);
-	gCameraPosUI[1].setCharacterSize(32);
-	gCameraPosUI[0].setPosition(20, 20);
-	gCameraPosUI[1].setPosition(120, 20);
-	gCameraPosUI[0].setFillColor(sf::Color::White);
-	gCameraPosUI[1].setFillColor(sf::Color::White);
-
-	uiElements.push_back(&gCameraPosUI[0]);
-	uiElements.push_back(&gCameraPosUI[1]);
-
 }
 
 void Game::mainLoop() {
@@ -51,11 +38,11 @@ void Game::mainLoop() {
 
 		gWindow.setView(gWindow.getDefaultView());
 
-		for(auto& i : uiElements)
-			gWindow.draw(*i);
+		uiMgr.draw();
 
 		gWindow.display();
 		Object::deltaTime = gClock.restart();
+		UiManager::deltaTime = Object::deltaTime;
 	}
 }
 
@@ -72,6 +59,8 @@ void Game::respondEvents() {
 			break;
 		case sf::Event::KeyPressed:
 			cameraMovement(buffer.key.code, false);
+			if(buffer.key.code == sf::Keyboard::Q)
+				gWindow.close();
 			break;
 		case sf::Event::KeyReleased:
 			cameraMovement(buffer.key.code, true);
@@ -98,9 +87,8 @@ void Game::cameraMovement(sf::Keyboard::Key _k, bool _isReleased) {
 void Game::update() {
 	gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
 
-	gCameraPosUI[0].setString(std::to_string((int)gCamera.getCenter().x));
-	gCameraPosUI[1].setString(std::to_string((int)gCamera.getCenter().y));
-
 	for(auto& i : objectsToDraw)
 		i->update();
+
+	uiMgr.update();
 }

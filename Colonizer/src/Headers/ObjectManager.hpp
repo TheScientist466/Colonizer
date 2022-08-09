@@ -4,7 +4,7 @@
 #include <vector>
 //#include <array>
 
-#include "Body.hpp";
+#include "Body.hpp"
 
 class ObjectManager {
 

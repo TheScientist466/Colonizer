@@ -7,6 +7,7 @@
 #include "Util.hpp"
 #include "Body.hpp"
 #include "ObjectManager.hpp"
+#include "UiManager.hpp"
 
 class Game {
 
@@ -15,7 +16,6 @@ public:
 
 public:
 	std::vector<Object*> objectsToDraw;
-	std::vector<sf::Drawable*> uiElements;
 
 private:
 	sf::RenderWindow gWindow;
@@ -24,9 +24,7 @@ private:
 	float gCameraSpeed = 400.f;
 	sf::Clock gClock;
 
-	sf::Font uiFont;
-	std::array<sf::Text, 2> gCameraPosUI;
-
+	UiManager uiMgr;
 	Input inputSystem;
 	ObjectManager objMgr;
 
