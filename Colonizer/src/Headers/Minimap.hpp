@@ -6,7 +6,7 @@
 #include "constants.hpp"
 #include "Object.hpp"
 
-class Minimap {
+class Minimap : Object {
 
 public:
 	Minimap(std::vector<Object*>* objsToDraw, sf::View* camView);

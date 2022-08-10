@@ -2,6 +2,9 @@
 
 sf::Time UiManager::deltaTime = sf::Time::Zero;
 
+const unsigned int FRAMERATE_CHECK_DELAY = 20;
+unsigned int updateCtr = 0;
+
 UiManager::UiManager(sf::RenderWindow* w, sf::View* _camView) :
 	gWindowPtr(w),
 	camView(_camView)
@@ -22,13 +25,16 @@ void UiManager::draw() {
 
 void UiManager::update() {
 
-	framerate = std::to_string((int)(1 / deltaTime.asSeconds()));
+	if(updateCtr % FRAMERATE_CHECK_DELAY == 0)
+		framerate = std::to_string((int)(1 / deltaTime.asSeconds()));
 	camPos[0] = std::to_string((int)camView->getCenter().x);
 	camPos[1] = std::to_string((int)camView->getCenter().y);
 
 
 	for(std::pair<sf::Text, std::string*>& a : dynamicTexts)
 		a.first.setString(*a.second);
+
+	updateCtr++;
 }
 
 void UiManager::addDynamicText(std::string* s, sf::Vector2f pos)

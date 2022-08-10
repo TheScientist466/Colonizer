@@ -8,6 +8,8 @@
 #define MAP_HEIGHT config::world::MAP_SIZE.y
 #define MAP_WIDTH config::world::MAP_SIZE.x
 
+#define FULLSCREEN
+
 const sf::Vector2i UP_VECTOR2		= sf::Vector2i( 0,  1);
 const sf::Vector2i DOWN_VECTOR2		= sf::Vector2i( 0, -1);
 const sf::Vector2i LEFT_VECTOR2		= sf::Vector2i(-1,  0);
@@ -16,7 +18,14 @@ const sf::Vector2i ZERO_VECTOR2		= sf::Vector2i( 0,  0);
 
 namespace config {
 	namespace window {
-		const sf::Vector2i WINDOW_DIMENTIONS = sf::Vector2i(900, 900);
+#ifndef FULLSCREEN
+		const sf::Vector2i WINDOW_DIMENTIONS = sf::Vector2i(1600, 900);
+		const bool TO_FULLSCREEN = false;
+#else
+		const sf::Vector2i WINDOW_DIMENTIONS = sf::Vector2i(1920, 1080);
+		const bool TO_FULLSCREEN = true;
+
+#endif // !FULLSCREEN
 		const std::string WINDOW_TITLE = "Title";
 	}
 	namespace world {
