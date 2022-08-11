@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 #Temp files
 ./Colonizer/Temp_Assets/
+/Colonizer/Temp_Assets
