@@ -19,7 +19,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 	RocketTexture->setSmooth(true);
 
 	sun = Body(100, sf::Vector2f(0, 0), "SUN");
-	sun.getShape()->setTexture(sunTexture);
+	sun.setTexture(sunTexture, getAverageColor(sunTexture));
 
 	sf::Texture* bodyTexture = new sf::Texture();
 	if(!bodyTexture->loadFromFile("./Assets/Planet1.png")) {
@@ -34,6 +34,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 
 		bodyTexture->loadFromImage(*k);
 	}
+	sf::Color averageBodyColor = getAverageColor(bodyTexture);
 
 	srand(time(0));
 	for(unsigned int i = 0; i < numOfPlanets; i++) {
@@ -55,7 +56,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 
 		if(isSpawnablePos) {
 			Body b = Body(randVal1, pos, std::to_string(i));
-			b.getShape()->setTexture(bodyTexture);
+			b.setTexture(bodyTexture, averageBodyColor);
 			planets.push_back(b);
 		}
 		else {

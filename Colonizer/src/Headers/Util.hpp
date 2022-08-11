@@ -30,3 +30,5 @@ float getDist(sf::Vector2f a, sf::Vector2f b);
 int getRandBetween(int min, int max);
 
 sf::Vector2f normalizeVector(sf::Vector2f a);
+
+sf::Color getAverageColor(sf::Texture* t);

@@ -15,7 +15,7 @@ Game::Game() :
 	inputSystem(&gWindow, &gCamera),
 	objMgr(&objectsToDraw),
 	uiMgr(&gWindow, &gCamera),
-	minimap(&objectsToDraw, &gCamera)
+	minimap(&objectsToDraw, &gCamera, false)
 {
 	gWindow.setFramerateLimit(60);
 	Object::inputSystem = &inputSystem;

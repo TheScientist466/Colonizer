@@ -17,6 +17,7 @@ private:
 
 public:
 	static sf::Texture* tex;
+	bool miniDraw = false;
 
 public:
 	sf::Sprite* getShape();

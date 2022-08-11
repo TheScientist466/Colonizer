@@ -55,3 +55,18 @@ sf::Vector2f normalizeVector(sf::Vector2f a) {
 void initUtil() {
 	//rng(time(0));
 }
+
+sf::Color getAverageColor(sf::Texture* t) {
+	sf::Vector3<unsigned long> col;
+	sf::Image img = t->copyToImage();
+	unsigned long ctr = 0;
+	for(int y = 0; y < img.getSize().y; y++) {
+		for(int x = 0; x < img.getSize().x; x++) {
+			sf::Color pixel = img.getPixel(x, y);
+			col += sf::Vector3<unsigned long>(pixel.r, pixel.g, pixel.b);
+			ctr++;
+		}
+	}
+	col /= ctr;
+	return sf::Color(col.x, col.y, col.z);
+}

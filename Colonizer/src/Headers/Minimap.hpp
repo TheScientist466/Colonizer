@@ -9,7 +9,7 @@
 class Minimap : Object {
 
 public:
-	Minimap(std::vector<Object*>* objsToDraw, sf::View* camView);
+	Minimap(std::vector<Object*>* objsToDraw, sf::View* camView, bool isLive);
 
 private:
 	sf::RenderTexture mapTexture;
@@ -18,6 +18,7 @@ private:
 
 	std::vector<Object*>* objsToDraw;
 	sf::View* camView;
+	bool isLive;
 
 public:
 	sf::Drawable* getShape();
