@@ -1,5 +1,7 @@
 #include "Util.hpp"
 
+#include <constants.hpp>
+
 #include <cmath>
 #include <random>
 
@@ -32,6 +34,10 @@ float getDistSq(sf::Vector2f a, sf::Vector2f b) {
 	return powf(a.x - b.x, 2) + powf(a.y - b.y, 2);
 }
 
+float getDist(sf::Vector2f a, sf::Vector2f b) {
+	return sqrtf(getDistSq(a, b));
+}
+
 int getRandBetween(int min, int max) {
 	//int randNum = rand() % (max - min + 1) + min;
 	//return randNum;
@@ -40,6 +46,10 @@ int getRandBetween(int min, int max) {
 	std::uniform_int_distribution<int> gen(min, max); // uniform, unbiased
 	int r = gen(rng);
 	return r;
+}
+
+sf::Vector2f normalizeVector(sf::Vector2f a) {
+	return a / getDist(a, static_cast<sf::Vector2f>(ZERO_VECTOR2));
 }
 
 void initUtil() {

@@ -15,9 +15,11 @@ private:
 	Body sun;
 
 	std::vector<Object*>* objectsToDrawPtr;
+	Body* lastSelected;
 
 public:
 	ObjectManager(std::vector<Object*>* objectsToDrawPtr);
 	void update();
+	void respondEvents(sf::Event e);
 
 };

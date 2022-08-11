@@ -8,13 +8,13 @@
 #define MAP_HEIGHT config::world::MAP_SIZE.y
 #define MAP_WIDTH config::world::MAP_SIZE.x
 
-#define FULLSCREEN
-
 const sf::Vector2i UP_VECTOR2		= sf::Vector2i( 0,  1);
 const sf::Vector2i DOWN_VECTOR2		= sf::Vector2i( 0, -1);
 const sf::Vector2i LEFT_VECTOR2		= sf::Vector2i(-1,  0);
 const sf::Vector2i RIGHT_VECTOR2	= sf::Vector2i( 1,  0);
 const sf::Vector2i ZERO_VECTOR2		= sf::Vector2i( 0,  0);
+
+const float PI = 3.141592653589793238;
 
 namespace config {
 	namespace window {

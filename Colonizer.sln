@@ -7,18 +7,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Colonizer", "Colonizer\Colo
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Fullscreen|x64 = Debug Fullscreen|x64
+		Debug Fullscreen|x86 = Debug Fullscreen|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug|x64.ActiveCfg = Debug|x64
-		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug|x64.Build.0 = Debug|x64
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug Fullscreen|x64.ActiveCfg = Debug Fullscreen|Win32
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug Fullscreen|x64.Build.0 = Debug Fullscreen|Win32
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug Fullscreen|x86.ActiveCfg = Debug Fullscreen|Win32
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug Fullscreen|x86.Build.0 = Debug Fullscreen|Win32
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug|x64.ActiveCfg = Debug|Win32
 		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug|x86.ActiveCfg = Debug|Win32
 		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Debug|x86.Build.0 = Debug|Win32
-		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Release|x64.ActiveCfg = Release|x64
-		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Release|x64.Build.0 = Release|x64
+		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Release|x64.ActiveCfg = Release|Win32
 		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Release|x86.ActiveCfg = Release|Win32
 		{D9D735A0-5485-4696-8060-2BB2DA83F55D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

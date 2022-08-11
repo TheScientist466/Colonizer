@@ -36,11 +36,4 @@ void Body::update() {
 	hitbox.left = shape.getPosition().x - shape.getRadius();
 }
 
-void Body::respondEvents(sf::Event e) {
-	if(e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Button::Left) {
-
-		if(hitbox.contains(static_cast<sf::Vector2f>(inputSystem->getMousePos(Space::WorldSpace)))) {
-			std::cout << name << " is clicked" << std::endl;
-		}
-	}
-}
+void Body::respondEvents(sf::Event e) {	}

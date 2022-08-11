@@ -1,6 +1,7 @@
 #include "ObjectManager.hpp"
 #include "constants.hpp"
 #include "Util.hpp"
+#include "Rocket.hpp"
 
 #include <string>
 #include <iostream>
@@ -10,6 +11,12 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 {
 	sf::Texture* sunTexture = new sf::Texture();
 	sunTexture->loadFromFile("./Assets/Sun.png");
+
+	sf::Texture* RocketTexture = new sf::Texture();
+	Rocket::tex = RocketTexture;
+	RocketTexture->loadFromFile("./Assets/Rocket1.png");
+	RocketTexture->generateMipmap();
+	RocketTexture->setSmooth(true);
 
 	sun = Body(100, sf::Vector2f(0, 0), "SUN");
 	sun.getShape()->setTexture(sunTexture);
@@ -64,4 +71,29 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 
 void ObjectManager::update() {
 
+}
+
+void ObjectManager::respondEvents(sf::Event e) {
+
+	if(e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Button::Left) {
+		bool clickedPlanet = false;
+		for(auto& p : planets) {
+
+			if(p.hitbox.contains(static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)))) {
+				if(lastSelected != nullptr)
+					lastSelected->getShape()->setFillColor(sf::Color::White);
+				lastSelected = &p;
+				lastSelected->getShape()->setFillColor(sf::Color::Green);
+				clickedPlanet = true;
+			}
+		}
+
+		if(!clickedPlanet && lastSelected != nullptr) {
+			objectsToDrawPtr->push_back(new Rocket(lastSelected->getShape()->getPosition(),
+												   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
+												   100.f));
+			lastSelected->getShape()->setFillColor(sf::Color::White);
+			lastSelected = nullptr;
+		}
+	}
 }

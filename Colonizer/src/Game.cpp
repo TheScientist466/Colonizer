@@ -51,6 +51,8 @@ void Game::mainLoop() {
 void Game::respondEvents() {
 	sf::Event buffer = inputSystem.getEvent();
 
+	objMgr.respondEvents(buffer);
+
 	for(auto& a : objectsToDraw) {
 		a->respondEvents(buffer);
 	}
@@ -91,6 +93,7 @@ void Game::update() {
 
 	for(auto& i : objectsToDraw)
 		i->update();
+	objMgr.update();
 	minimap.update();
 	uiMgr.update();
 }
