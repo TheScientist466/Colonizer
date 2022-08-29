@@ -5,6 +5,7 @@
 //#include <array>
 
 #include "Body.hpp"
+#include "Rocket.hpp"
 
 class ObjectManager {
 
@@ -12,6 +13,7 @@ private:
 	const unsigned int numOfPlanets = 200;
 	
 	std::vector<Body> planets;
+	std::vector<Rocket*> rockets;
 	Body sun;
 
 	std::vector<Object*>* objectsToDrawPtr;

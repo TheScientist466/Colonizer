@@ -8,6 +8,12 @@ enum class Space {
 	WorldSpace
 };
 
+enum class ObjectTag {
+	PureObject,
+	Body, 
+	Rocket
+};
+
 class Input {
 	
 public:

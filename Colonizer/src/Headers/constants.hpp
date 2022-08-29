@@ -27,8 +27,10 @@ namespace config {
 
 #endif // !FULLSCREEN
 		const std::string WINDOW_TITLE = "Title";
+		const unsigned int framerate = 60;
 	}
 	namespace world {
 		const sf::Vector2i MAP_SIZE = sf::Vector2i(5000, 5000);
+		const sf::IntRect MAP = sf::IntRect(-(MAP_SIZE.x >> 1), -(MAP_SIZE.y >> 1), MAP_SIZE.x, MAP_SIZE.y);
 	}
 }

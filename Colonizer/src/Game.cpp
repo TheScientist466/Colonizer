@@ -17,7 +17,7 @@ Game::Game() :
 	uiMgr(&gWindow, &gCamera),
 	minimap(&objectsToDraw, &gCamera, false)
 {
-	gWindow.setFramerateLimit(60);
+	gWindow.setFramerateLimit(config::window::framerate);
 	Object::inputSystem = &inputSystem;
 	
 	gCamera.setCenter(sf::Vector2f(0, 0));
@@ -90,9 +90,6 @@ void Game::cameraMovement(sf::Keyboard::Key _k, bool _isReleased) {
 
 void Game::update() {
 	gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
-
-	for(auto& i : objectsToDraw)
-		i->update();
 	objMgr.update();
 	minimap.update();
 	uiMgr.update();

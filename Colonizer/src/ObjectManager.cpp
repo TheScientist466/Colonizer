@@ -55,7 +55,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 		}
 
 		if(isSpawnablePos) {
-			Body b = Body(randVal1, pos, std::to_string(i));
+			Body b(randVal1, pos, std::to_string(i));
 			b.setTexture(bodyTexture, averageBodyColor);
 			planets.push_back(b);
 		}
@@ -71,7 +71,38 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 }
 
 void ObjectManager::update() {
+	sun.update();
+	for(auto& a : planets)
+		a.update();
 
+	for(int i = 0; i < rockets.size(); i++) {
+		sf::Vector2f rocketPos = rockets[i]->getShape()->getPosition();
+		if(!config::world::MAP.contains(static_cast<sf::Vector2i>(rocketPos))) {
+			rockets[i]->toDestroy = true;
+		}
+
+		if(!(rockets[i]->isHit || rockets[i]->toDestroy)) {
+			for(auto& a : planets) {
+				if(&a != rockets[i]->parent) {
+					if(a.hitbox.contains(rockets[i]->getShape()->getPosition())) {
+						rockets[i]->isHit = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if(rockets[i]->toDestroy) {
+			delete rockets[i];
+			for(int k = 0; k < objectsToDrawPtr->size(); k++) {
+				if(rockets[i] == (*objectsToDrawPtr)[k])
+					objectsToDrawPtr->erase(objectsToDrawPtr->begin() + k);
+			}
+			rockets.erase(rockets.begin() + i);
+		}
+		else
+			rockets[i]->update();
+	}
 }
 
 void ObjectManager::respondEvents(sf::Event e) {
@@ -90,9 +121,12 @@ void ObjectManager::respondEvents(sf::Event e) {
 		}
 
 		if(!clickedPlanet && lastSelected != nullptr) {
-			objectsToDrawPtr->push_back(new Rocket(lastSelected->getShape()->getPosition(),
-												   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
-												   100.f));
+			Rocket* r = new Rocket(lastSelected, 
+								   lastSelected->getShape()->getPosition(),
+								   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
+								   100.f);
+			rockets.push_back(r);
+			objectsToDrawPtr->push_back(r);
 			lastSelected->getShape()->setFillColor(sf::Color::White);
 			lastSelected = nullptr;
 		}

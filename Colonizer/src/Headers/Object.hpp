@@ -7,6 +7,8 @@
 struct Object {
 
 public:
+	ObjectTag tag = ObjectTag::PureObject;
+
 	static sf::Time deltaTime;
 	static Input* inputSystem;
 	sf::FloatRect hitbox;

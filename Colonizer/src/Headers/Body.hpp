@@ -9,6 +9,7 @@ class Body : public Object{
 
 public:
 	std::string name;
+	ObjectTag tag = ObjectTag::Body;
 
 private:
 	float radius;
@@ -16,6 +17,10 @@ private:
 
 	sf::CircleShape shape;
 	sf::CircleShape miniShape;
+
+	int power;
+	float powerIncreaseRate;
+
 
 public:
 	Body();
