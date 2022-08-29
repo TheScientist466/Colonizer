@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <cmath>
 
 ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 	objectsToDrawPtr(_objToDrawPtr)
@@ -68,6 +69,8 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 
 	for(auto& a : planets)
 		objectsToDrawPtr->push_back(&a);
+
+	lastSelected = nullptr;
 }
 
 void ObjectManager::update() {

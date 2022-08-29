@@ -8,7 +8,7 @@ sf::Drawable* Object::getShape() {
 }
 
 sf::Drawable* Object::getMiniShape() {
-	return shape;
+	//return shape;
 }
 
 void Object::update() { }
