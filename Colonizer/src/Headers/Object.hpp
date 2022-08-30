@@ -11,6 +11,7 @@ public:
 
 	static sf::Time deltaTime;
 	static Input* inputSystem;
+	static TextureManager* textureManager;
 	sf::FloatRect hitbox;
 
 	bool miniDraw;

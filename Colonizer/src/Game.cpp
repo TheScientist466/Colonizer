@@ -13,14 +13,18 @@ Game::Game() :
 	gWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Title", config::window::TO_FULLSCREEN ? sf::Style::Fullscreen : sf::Style::Close, sf::ContextSettings(0, 0, 2))),
 	gCamera(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)),
 	inputSystem(&gWindow, &gCamera),
-	objMgr(&objectsToDraw),
+	objMgr(&objectsToDraw, texMgr),
 	uiMgr(&gWindow, &gCamera),
 	minimap(&objectsToDraw, &gCamera, false)
 {
 	gWindow.setFramerateLimit(config::window::framerate);
 	Object::inputSystem = &inputSystem;
-	
+
 	gCamera.setCenter(sf::Vector2f(0, 0));
+}
+
+Game::~Game() {
+	delete texMgr;
 }
 
 void Game::mainLoop() {

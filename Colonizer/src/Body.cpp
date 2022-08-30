@@ -57,3 +57,17 @@ void Body::setTexture(sf::Texture* t, sf::Color c) {
 
 	miniShape.setFillColor(c);
 }
+
+void Body::setTextureRect(sf::Texture* t, sf::IntRect r) {
+	shape.setTexture(t);
+	shape.setTextureRect(r);
+
+	miniShape.setFillColor(getAverageColor(t));
+}
+
+void Body::setTextureRect(sf::Texture* t, sf::IntRect r, sf::Color c) {
+	shape.setTexture(t);
+	shape.setTextureRect(r);
+
+	miniShape.setFillColor(c);
+}

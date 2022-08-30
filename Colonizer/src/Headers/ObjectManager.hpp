@@ -20,7 +20,7 @@ private:
 	Body* lastSelected;
 
 public:
-	ObjectManager(std::vector<Object*>* objectsToDrawPtr);
+	ObjectManager(std::vector<Object*>* objectsToDrawPtr, TextureManager* texMgrPtr);
 	void update();
 	void respondEvents(sf::Event e);
 

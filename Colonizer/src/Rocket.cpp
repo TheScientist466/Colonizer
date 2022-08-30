@@ -5,14 +5,9 @@
 
 #include <cmath>
 
-sf::Texture* Rocket::tex;
-
 Rocket::Rocket(Body* _p) :
 	parent(_p)
-{
-	shape.setTexture(*tex);
-	shape.setScale(.08, .08);
-}
+{ }
 
 Rocket::Rocket(Body* _p, sf::Vector2f pos) :
 	parent(_p)
@@ -23,8 +18,6 @@ Rocket::Rocket(Body* _p, sf::Vector2f pos) :
 Rocket::Rocket(Body* _p, sf::Vector2f pos, sf::Vector2f _vel) :
 	parent(_p)
 {
-	shape.setTexture(*tex);
-	shape.setScale(.08, .08);
 	shape.setPosition(pos);
 	sf::Vector2f direction = normalizeVector(velocity);
 	shape.setRotation((atan2f(direction.y, direction.x) * 180.f / PI) + 90);
@@ -35,8 +28,6 @@ Rocket::Rocket(Body* _p, sf::Vector2f pos, sf::Vector2f _vel) :
 Rocket::Rocket(Body* _p, sf::Vector2f pos, sf::Vector2f direction, float speed) :
 	parent(_p)
 {
-	shape.setTexture(*tex);
-	shape.setScale(.08, .08);
 	shape.setPosition(pos);
 	shape.setRotation((atan2f(direction.y, direction.x) * 180.f / PI) + 90);
 
@@ -57,4 +48,16 @@ void Rocket::update() {
 		if(dieCtr < 0)
 			toDestroy = true;
 	}
+}
+
+
+void Rocket::setTexture(sf::Texture* t) {
+	shape.setTexture(*t);
+	shape.setScale(.08, .08);
+}
+
+void Rocket::setTextureRect(sf::Texture* t, sf::IntRect r) {
+	shape.setTexture(*t);
+	shape.setTextureRect(r);
+	shape.setScale(.08, .08);
 }

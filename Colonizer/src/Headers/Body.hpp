@@ -31,6 +31,8 @@ public:
 
 	void setTexture(sf::Texture* t);
 	void setTexture(sf::Texture* t, sf::Color averageColor);
+	void setTextureRect(sf::Texture* t, sf::IntRect r);
+	void setTextureRect(sf::Texture* t, sf::IntRect r, sf::Color averageColor);
 
 	void update();
 	void respondEvents(sf::Event e);

@@ -11,6 +11,7 @@ enum class Space {
 enum class ObjectTag {
 	PureObject,
 	Body, 
+	Sun,
 	Rocket
 };
 
@@ -28,6 +29,16 @@ public:
 	sf::Vector2i getMousePos(Space s);
 	bool pollEvent();
 	sf::Event getEvent();
+};
+
+struct TextureManager {
+	TextureManager();
+	TextureManager(std::string pathToMainTexture);
+	sf::Texture* getTexture();
+	sf::IntRect getRect(ObjectTag tag, unsigned int type);
+	sf::Color getMinimapColor(ObjectTag tag, unsigned int type);
+private:
+	sf::Texture* mainTexture;
 };
 
 float getDistSq(sf::Vector2f a, sf::Vector2f b);

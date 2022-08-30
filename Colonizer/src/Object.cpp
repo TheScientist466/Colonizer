@@ -2,6 +2,7 @@
 
 sf::Time Object::deltaTime = sf::Time::Zero;
 Input* Object::inputSystem = nullptr;
+TextureManager* Object::textureManager = nullptr;
 
 sf::Drawable* Object::getShape() {
 	return shape;

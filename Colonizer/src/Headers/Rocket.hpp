@@ -23,7 +23,6 @@ public:
 	ObjectTag tag = ObjectTag::Rocket;
 	const Body* parent;
 
-	static sf::Texture* tex;
 	bool miniDraw = false;
 	bool isHit = false;
 	bool toDestroy = false;
@@ -31,4 +30,6 @@ public:
 public:
 	sf::Sprite* getShape();
 	void update();
+	void setTexture(sf::Texture* t);
+	void setTextureRect(sf::Texture* t, sf::IntRect r);
 };

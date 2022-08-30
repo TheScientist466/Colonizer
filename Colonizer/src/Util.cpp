@@ -70,3 +70,75 @@ sf::Color getAverageColor(sf::Texture* t) {
 	col /= ctr;
 	return sf::Color(col.x, col.y, col.z);
 }
+
+TextureManager::TextureManager() { }
+
+TextureManager::TextureManager(std::string _p) {
+	mainTexture = new sf::Texture();
+	mainTexture->loadFromFile(_p);
+	mainTexture->generateMipmap();
+	mainTexture->setSmooth(true);
+}
+
+sf::Texture* TextureManager::getTexture() {
+	return mainTexture;
+}
+
+sf::IntRect TextureManager::getRect(ObjectTag _tag, unsigned int type) {
+
+	switch(_tag) {
+		case ObjectTag::Sun:
+			return sf::IntRect(1500, 500, 500, 500);
+		case ObjectTag::Body:
+			switch(type) {
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+					return sf::IntRect(type * 500, 0, 500, 500);
+				case 4:
+				case 5:
+				case 6:
+					return sf::IntRect((type - 4) * 500, 500, 500, 500);
+				default:
+					return sf::IntRect(1000, 500, 500, 500);
+			}
+		case ObjectTag::Rocket:
+			switch(type) {
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+					return sf::IntRect(type * 100, 1000, 100, 200);
+				default:
+					return sf::IntRect(0, 1000, 100, 200);
+			}
+	}
+}
+
+sf::Color TextureManager::getMinimapColor(ObjectTag _tag, unsigned int _type) {
+	switch(_tag) {
+		case ObjectTag::Sun:
+			return sf::Color::Yellow;
+		case ObjectTag::Body:
+			switch(_type) {
+				case 1:
+				case 2:
+				case 3:
+					return sf::Color(0xff, 0xa5, 0x00);
+				case 0:
+				case 4:
+					return sf::Color::Green;
+				case 5:
+					return sf::Color::Cyan;
+				case 6:
+					return sf::Color::White;
+				default:
+					return sf::Color::White;
+			}
+			break;
+		default:
+			return sf::Color::White;
+	}
+}

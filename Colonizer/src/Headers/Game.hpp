@@ -14,6 +14,7 @@ class Game {
 
 public:
 	Game();
+	~Game();
 
 public:
 	std::vector<Object*> objectsToDraw;
@@ -30,6 +31,7 @@ private:
 	UiManager uiMgr;
 	Input inputSystem;
 	ObjectManager objMgr;
+	TextureManager* texMgr;
 
 public:
 	void mainLoop();

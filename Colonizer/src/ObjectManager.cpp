@@ -6,49 +6,31 @@
 #include <string>
 #include <iostream>
 #include <cmath>
+#include <array>
 
-ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
+
+
+ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager* _texMgrPtr) :
 	objectsToDrawPtr(_objToDrawPtr)
 {
-	sf::Texture* sunTexture = new sf::Texture();
-	sunTexture->loadFromFile("./Assets/Sun.png");
-
-	sf::Texture* RocketTexture = new sf::Texture();
-	Rocket::tex = RocketTexture;
-	RocketTexture->loadFromFile("./Assets/Rocket1.png");
-	RocketTexture->generateMipmap();
-	RocketTexture->setSmooth(true);
+	_texMgrPtr = new TextureManager("./Assets/mainTexture.png");
+	Object::textureManager = _texMgrPtr;
 
 	sun = Body(100, sf::Vector2f(0, 0), "SUN");
-	sun.setTexture(sunTexture, getAverageColor(sunTexture));
+	sun.setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Sun, 0), Object::textureManager->getMinimapColor(ObjectTag::Sun, 0));
 
-	sf::Texture* bodyTexture = new sf::Texture();
-	if(!bodyTexture->loadFromFile("./Assets/Planet1.png")) {
-		sf::Image* k = new sf::Image();
-		k->create(500, 500);
-
-		for(unsigned int i = 0; i < k->getSize().y; i++) {
-			for(unsigned int j = 0; j < k->getSize().x; j++) {
-				k->setPixel(j, i, sf::Color(0, j, i));
-			}
-		}
-
-		bodyTexture->loadFromImage(*k);
-	}
-	sf::Color averageBodyColor = getAverageColor(bodyTexture);
-
-	srand(time(0));
+	srand((unsigned int)time(0));
 	for(unsigned int i = 0; i < numOfPlanets; i++) {
 
-		int randVal1 = getRandBetween(10, 30), randVal2 = getRandBetween(-1 * (MAP_WIDTH >> 1), MAP_WIDTH >> 1), randVal3 = getRandBetween(-1 * (MAP_HEIGHT >> 1), MAP_HEIGHT >> 1);
-		sf::Vector2f pos(randVal2, randVal3);
+		int radius = getRandBetween(10, 30), posX = getRandBetween(-1 * (MAP_WIDTH >> 1), MAP_WIDTH >> 1), posY = getRandBetween(-1 * (MAP_HEIGHT >> 1), MAP_HEIGHT >> 1);
+		sf::Vector2f pos(posX, posY);
 		bool isSpawnablePos = true;
 		
-		if(getDistSq(sun.getShape()->getPosition(), pos) <= powf(sun.getShape()->getRadius() + randVal1 + 10.f, 2))
+		if(getDistSq(sun.getShape()->getPosition(), pos) <= powf(sun.getShape()->getRadius() + radius + 10.f, 2))
 			isSpawnablePos = false;
 		else {
 			for(auto& a : planets) {
-				if(getDistSq(a.getShape()->getPosition(), pos) <= powf(a.getShape()->getRadius() + randVal1 + 10.f, 2)) {
+				if(getDistSq(a.getShape()->getPosition(), pos) <= powf(a.getShape()->getRadius() + radius + 10.f, 2)) {
 					isSpawnablePos = false;
 					break;
 				}
@@ -56,8 +38,36 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr) :
 		}
 
 		if(isSpawnablePos) {
-			Body b(randVal1, pos, std::to_string(i));
-			b.setTexture(bodyTexture, averageBodyColor);
+			float distFormSun = getDist(pos, sun.getShape()->getPosition());
+			Body b(radius, pos, std::to_string(i));
+
+			int randVal = getRandBetween(1, 100);
+			int planetType = 0;
+
+			if(distFormSun <= 1000) {
+				if(randVal <= 60)
+					planetType = 3;
+				else if(randVal <= 80)
+					planetType = 2;
+				else
+					planetType = 1;
+			}
+			else if(distFormSun <= 2000){
+				if(randVal <= 34)
+					planetType = 6;
+				else if(randVal <= 67)
+					planetType = 0;
+				else
+					planetType = 4;
+			}
+			else {
+				if(randVal <= 80)
+					planetType = 5;
+				else
+					planetType = 6;
+			}
+
+			b.setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Body, planetType), Object::textureManager->getMinimapColor(ObjectTag::Body, planetType));
 			planets.push_back(b);
 		}
 		else {
@@ -78,7 +88,7 @@ void ObjectManager::update() {
 	for(auto& a : planets)
 		a.update();
 
-	for(int i = 0; i < rockets.size(); i++) {
+	for(unsigned int i = 0; i < rockets.size(); i++) {
 		sf::Vector2f rocketPos = rockets[i]->getShape()->getPosition();
 		if(!config::world::MAP.contains(static_cast<sf::Vector2i>(rocketPos))) {
 			rockets[i]->toDestroy = true;
@@ -97,7 +107,7 @@ void ObjectManager::update() {
 
 		if(rockets[i]->toDestroy) {
 			delete rockets[i];
-			for(int k = 0; k < objectsToDrawPtr->size(); k++) {
+			for(unsigned int k = 0; k < objectsToDrawPtr->size(); k++) {
 				if(rockets[i] == (*objectsToDrawPtr)[k])
 					objectsToDrawPtr->erase(objectsToDrawPtr->begin() + k);
 			}
@@ -128,6 +138,7 @@ void ObjectManager::respondEvents(sf::Event e) {
 								   lastSelected->getShape()->getPosition(),
 								   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
 								   100.f);
+			r->setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Rocket, getRandBetween(0, 5)));
 			rockets.push_back(r);
 			objectsToDrawPtr->push_back(r);
 			lastSelected->getShape()->setFillColor(sf::Color::White);
