@@ -14,7 +14,7 @@ const sf::Vector2i LEFT_VECTOR2		= sf::Vector2i(-1,  0);
 const sf::Vector2i RIGHT_VECTOR2	= sf::Vector2i( 1,  0);
 const sf::Vector2i ZERO_VECTOR2		= sf::Vector2i( 0,  0);
 
-const float PI = 3.141592653589793238;
+const float PI = 3.141592653589793238f;
 
 namespace config {
 	namespace window {

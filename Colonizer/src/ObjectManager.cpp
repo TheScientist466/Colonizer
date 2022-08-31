@@ -53,9 +53,9 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 					planetType = 1;
 			}
 			else if(distFormSun <= 2000){
-				if(randVal <= 34)
+				if(randVal <= 80)
 					planetType = 6;
-				else if(randVal <= 67)
+				else if(randVal <= 90)
 					planetType = 0;
 				else
 					planetType = 4;
@@ -81,6 +81,11 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 		objectsToDrawPtr->push_back(&a);
 
 	lastSelected = nullptr;
+}
+
+ObjectManager::~ObjectManager() {
+	for(auto a : rockets)
+		delete a;
 }
 
 void ObjectManager::update() {

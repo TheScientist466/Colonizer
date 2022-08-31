@@ -73,6 +73,9 @@ void Game::respondEvents() {
 		case sf::Event::KeyReleased:
 			cameraMovement(buffer.key.code, true);
 			break;
+		case sf::Event::MouseButtonPressed:
+			mouseLastPressed = inputSystem.getMousePos(Space::WorldSpace);
+			break;
 	}
 }
 
@@ -93,7 +96,11 @@ void Game::cameraMovement(sf::Keyboard::Key _k, bool _isReleased) {
 }
 
 void Game::update() {
-	gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
+	if(!sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle))
+		gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
+	else
+		gCamera.move(static_cast<sf::Vector2f>(mouseLastPressed - inputSystem.getMousePos(Space::WorldSpace)));
+
 	objMgr.update();
 	minimap.update();
 	uiMgr.update();

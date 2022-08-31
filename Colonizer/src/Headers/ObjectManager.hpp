@@ -21,6 +21,7 @@ private:
 
 public:
 	ObjectManager(std::vector<Object*>* objectsToDrawPtr, TextureManager* texMgrPtr);
+	~ObjectManager();
 	void update();
 	void respondEvents(sf::Event e);
 

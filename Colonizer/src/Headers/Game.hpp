@@ -25,6 +25,7 @@ private:
 	sf::Vector2i gCameraDir;
 	float gCameraSpeed = 400.f;
 	sf::Clock gClock;
+	sf::Vector2i mouseLastPressed;
 
 	Minimap minimap;
 
