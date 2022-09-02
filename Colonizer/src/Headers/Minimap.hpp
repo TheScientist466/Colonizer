@@ -22,6 +22,6 @@ private:
 
 public:
 	sf::Drawable* getShape();
-	void update();
+	void update(bool toForceUpdate = false);
 
 };

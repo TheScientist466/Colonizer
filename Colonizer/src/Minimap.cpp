@@ -29,25 +29,27 @@ sf::Drawable* Minimap::getShape() {
 	return &shape;
 }
 
-void Minimap::update() {
+void Minimap::update(bool toForceUpdate) {
 	bool enlarge = hitbox.contains(static_cast<sf::Vector2f>(inputSystem->getMousePos(Space::WindowSpace)));
 
 	cameraPos.setPosition(camView->getCenter());
 	cameraPos.setScale(sf::Vector2f(1, 1) * ((sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle) && !enlarge) ? 3.f : 1.f));
 
-	mapTexture.clear(sf::Color::Black);
-	for(auto& a : *objsToDraw) {
-		if(isLive)
-			mapTexture.draw(*a->getShape());
-		else {
-			if(a->miniDraw) {
-				mapTexture.draw(*a->getMiniShape());
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle) || enlarge || toForceUpdate) {
+		mapTexture.clear(sf::Color::Black);
+		for(auto& a : *objsToDraw) {
+			if(isLive)
+				mapTexture.draw(*a->getShape());
+			else {
+				if(a->miniDraw) {
+					mapTexture.draw(*a->getMiniShape());
+				}
 			}
 		}
+		mapTexture.draw(cameraPos);
+		mapTexture.generateMipmap();
+		mapTexture.setSmooth(true);
 	}
-	mapTexture.draw(cameraPos);
-	mapTexture.generateMipmap();
-	mapTexture.setSmooth(true);
 
 	shape.setScale(sf::Vector2f(1, 1) * (enlarge ? 3.f : 1.f));
 }
