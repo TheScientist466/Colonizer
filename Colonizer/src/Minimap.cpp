@@ -30,7 +30,7 @@ sf::Drawable* Minimap::getShape() {
 }
 
 void Minimap::update(bool toForceUpdate) {
-	bool enlarge = hitbox.contains(static_cast<sf::Vector2f>(inputSystem->getMousePos(Space::WindowSpace)));
+	bool enlarge = hitbox.contains(static_cast<sf::Vector2f>(inputSystem->getMousePos(Space::WindowSpace))) && !sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle);
 
 	cameraPos.setPosition(camView->getCenter());
 	cameraPos.setScale(sf::Vector2f(1, 1) * ((sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle) && !enlarge) ? 3.f : 1.f));

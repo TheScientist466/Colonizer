@@ -138,7 +138,10 @@
   <ItemGroup>
     <ClCompile Include="src\Body.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\UI\Button.cpp" />
+    <ClCompile Include="src\MainMenu\Loader.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainMenu\MainMenu.cpp" />
     <ClCompile Include="src\Minimap.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\ObjectManager.cpp" />
@@ -150,10 +153,13 @@
     <ClInclude Include="src\Headers\Body.hpp" />
     <ClInclude Include="src\Headers\constants.hpp" />
     <ClInclude Include="src\Headers\Game.hpp" />
+    <ClInclude Include="src\Headers\MainMenu\Loader.hpp" />
+    <ClInclude Include="src\Headers\MainMenu\MainMenu.hpp" />
     <ClInclude Include="src\Headers\Minimap.hpp" />
     <ClInclude Include="src\Headers\ObjectManager.hpp" />
     <ClInclude Include="src\Headers\Rocket.hpp" />
     <ClInclude Include="src\Headers\UiManager.hpp" />
+    <ClInclude Include="src\Headers\UI\Button.hpp" />
     <ClInclude Include="src\Headers\Util.hpp" />
     <ClInclude Include="src\Headers\Object.hpp" />
   </ItemGroup>

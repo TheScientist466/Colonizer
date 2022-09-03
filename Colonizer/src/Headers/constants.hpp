@@ -17,18 +17,13 @@ const sf::Vector2i ZERO_VECTOR2		= sf::Vector2i( 0,  0);
 const float PI = 3.141592653589793238f;
 
 namespace config {
-	namespace window {
-#ifndef FULLSCREEN
-		const sf::Vector2i WINDOW_DIMENTIONS = sf::Vector2i(1600, 900);
-		const bool TO_FULLSCREEN = false;
-#else
-		const sf::Vector2i WINDOW_DIMENTIONS = sf::Vector2i(1920, 1080);
-		const bool TO_FULLSCREEN = true;
+	struct window {
+		static sf::Vector2i WINDOW_DIMENTIONS;
+		static bool TO_FULLSCREEN;
 
-#endif // !FULLSCREEN
-		const std::string WINDOW_TITLE = "Title";
-		const unsigned int framerate = 60;
-	}
+		static std::string WINDOW_TITLE;
+		static const unsigned int framerate = 60;
+	};
 	namespace world {
 		const sf::Vector2i MAP_SIZE = sf::Vector2i(5000, 5000);
 		const sf::IntRect MAP = sf::IntRect(-(MAP_SIZE.x >> 1), -(MAP_SIZE.y >> 1), MAP_SIZE.x, MAP_SIZE.y);
