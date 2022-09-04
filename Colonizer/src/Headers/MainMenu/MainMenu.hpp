@@ -5,21 +5,20 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class MainMenu {
-
-public:
+struct MainMenu {
 	MainMenu();
 	~MainMenu();
 
-private:
 	sf::RenderWindow* mWindow;
 	sf::Event mEvents;
 
 	std::vector<Button<MainMenu>*> Buttons;
 
-public:
 	void Loop();
-
-private:
-	static void clk1(Button<MainMenu>&, MainMenu&);
+	bool toStartGame;
 };
+
+namespace ButtonActions {
+	void startGame(Button<MainMenu>&, MainMenu&);
+	void quit(Button<MainMenu>&, MainMenu&);
+}

@@ -4,10 +4,10 @@
 int main() {
 	MainMenu* m = new MainMenu();
 	m->Loop();
-
-	Game* g = new Game();
-	g->mainLoop();
-
+	if(m->toStartGame) {
+		Game* g = new Game();
+		g->mainLoop();
+		delete g;
+	}
 	delete m;
-	delete g;
 }

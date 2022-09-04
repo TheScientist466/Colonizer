@@ -16,11 +16,12 @@ public:
 		shape.setPosition(sf::Vector2f(hitbox.left, hitbox.top));
 
 		sf::Font* f = new sf::Font();
-		if(f->loadFromFile("./Assets/Alice-Regular.ttf")) {
-			text = sf::Text("Button", *f, 40);
+		if(f->loadFromFile("./Assets/Comfortaa-VariableFont_wght.ttf")) {
+			text = sf::Text("Button", *f, 32);
+			text.setStyle(1);
 			text.setFillColor(sf::Color::Black);
 			text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-			text.setPosition(hitbox.left + hitbox.width / 2, hitbox.top + hitbox.height / 3);
+			text.setPosition(hitbox.left + (hitbox.width / 2) - (text.getLocalBounds().width / 4), hitbox.top + (hitbox.height / 2) - (text.getLocalBounds().height / 2));
 		}
 	}
 

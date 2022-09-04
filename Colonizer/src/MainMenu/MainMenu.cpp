@@ -1,12 +1,22 @@
 #include "MainMenu/MainMenu.hpp"
 
 MainMenu::MainMenu() {
-	mWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "Colonizer - Main Menu", sf::Style::Close);
+	mWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "Colonizer - Main Menu", sf::Style::Close, sf::ContextSettings(0, 0, 3));
 	mWindow->setFramerateLimit(30);
+	toStartGame = false;
 
-	Button<MainMenu>* b = new Button<MainMenu>(sf::FloatRect(20, 450, 400, 100), this, nullptr, &clk1);
-	b->text.setString("Start");
-	Buttons.push_back(b);
+	Button<MainMenu>* startButton = new Button<MainMenu>(sf::FloatRect(26, 195, 250, 50), this, nullptr, &ButtonActions::startGame);
+	startButton->text.setString("Start");
+	Buttons.push_back(startButton);
+
+	Button<MainMenu>* optionsButton = new Button<MainMenu>(sf::FloatRect(26, 275, 250, 50), this, nullptr, nullptr);
+	optionsButton->text.setString("Options");
+	Buttons.push_back(optionsButton);
+
+	Button<MainMenu>* quitButton = new Button<MainMenu>(sf::FloatRect(26, 355, 250, 50), this, nullptr, &ButtonActions::quit);
+	quitButton->text.setString("Quit");
+	Buttons.push_back(quitButton);
+
 }
 
 MainMenu::~MainMenu() {
@@ -53,6 +63,11 @@ void MainMenu::Loop() {
 	}
 }
 
-void MainMenu::clk1(Button<MainMenu>& b, MainMenu& m) {
+void ButtonActions::startGame(Button<MainMenu>& b, MainMenu& m) {
+	m.mWindow->close();
+	m.toStartGame = true;
+}
+
+void ButtonActions::quit(Button<MainMenu>& b, MainMenu& m) {
 	m.mWindow->close();
 }
