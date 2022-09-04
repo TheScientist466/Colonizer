@@ -138,7 +138,6 @@
   <ItemGroup>
     <ClCompile Include="src\Body.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\UI\Button.cpp" />
     <ClCompile Include="src\MainMenu\Loader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainMenu\MainMenu.cpp" />

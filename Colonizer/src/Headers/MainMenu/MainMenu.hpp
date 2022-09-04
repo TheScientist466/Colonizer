@@ -15,11 +15,11 @@ private:
 	sf::RenderWindow* mWindow;
 	sf::Event mEvents;
 
-	std::vector<Button*> Buttons;
+	std::vector<Button<MainMenu>*> Buttons;
 
 public:
 	void Loop();
 
 private:
-	static void clk1(Button&);
+	static void clk1(Button<MainMenu>&, MainMenu&);
 };

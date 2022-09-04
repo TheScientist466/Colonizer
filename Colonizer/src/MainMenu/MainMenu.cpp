@@ -3,7 +3,7 @@
 MainMenu::MainMenu() {
 	mWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "Colonizer - Main Menu", sf::Style::Close);
 
-	Button* b = new Button(sf::FloatRect(20, 450, 400, 100), &clk1);
+	Button<MainMenu>* b = new Button<MainMenu>(sf::FloatRect(20, 450, 400, 100), this, &clk1);
 	Buttons.push_back(b);
 }
 
@@ -52,6 +52,6 @@ void MainMenu::Loop() {
 	}
 }
 
-void MainMenu::clk1(Button& b) {
-	//b.getShape()->setFillColor(sf::Color(0xaaaaaaff));
+void MainMenu::clk1(Button<MainMenu>& b, MainMenu& m) {
+	m.mWindow->close();
 }
