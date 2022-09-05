@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 template <class T>
-class Button {
+class Button : public sf::Drawable {
 
 public:
 	Button(sf::FloatRect _r, T* _obj, void (*_onClick)(Button&, T&), void (*_onRelease)(Button&, T&)) {
@@ -21,7 +21,7 @@ public:
 			text.setStyle(1);
 			text.setFillColor(sf::Color::Black);
 			text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-			text.setPosition(hitbox.left + (hitbox.width / 2) - (text.getLocalBounds().width / 4), hitbox.top + (hitbox.height / 2) - (text.getLocalBounds().height / 2));
+			text.setPosition(hitbox.left + (hitbox.width / 4), hitbox.top + (hitbox.height / 4));
 		}
 	}
 
@@ -34,6 +34,7 @@ public:
 	sf::Color clickedColor = sf::Color(0xaaaaaaff);
 	sf::Color releasedColor = sf::Color(0xffffffff);
 	sf::Text text;
+	int id = 0;
 
 private:
 	T* obj;
@@ -62,5 +63,10 @@ public:
 	}
 	sf::RectangleShape* getShape() {
 		return &shape;
+	}
+private:
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+		target.draw(shape, states);
+		target.draw(text);
 	}
 };
