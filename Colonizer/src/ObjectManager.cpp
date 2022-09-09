@@ -8,7 +8,7 @@
 #include <cmath>
 #include <array>
 
-
+bool clickedPlanet = false;
 
 ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager* _texMgrPtr) :
 	objectsToDrawPtr(_objToDrawPtr)
@@ -80,12 +80,15 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 			continue;
 		}
 	}
-	//objectsToDrawPtr->push_back(&sun);
 
 	for(auto& a : planets)
 		objectsToDrawPtr->push_back(&a);
 
 	lastSelected = nullptr;
+
+	mouseText = TextObject(*Object::defaultFont);
+	objectsToDrawPtr->push_back(&mouseText);
+	mouseText.toDraw = false;
 }
 
 ObjectManager::~ObjectManager() {
@@ -109,6 +112,7 @@ void ObjectManager::update() {
 			for(auto& a : planets) {
 				if(&a != rockets[i]->parent) {
 					if(a.hitbox.contains(rockets[i]->getShape()->getPosition())) {
+						a.rocketHit();
 						rockets[i]->isHit = true;
 						break;
 					}
@@ -127,31 +131,54 @@ void ObjectManager::update() {
 		else
 			rockets[i]->update();
 	}
+
+	if(mouseText.toDraw) {
+		if(lastSelected != nullptr && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			sf::Vector2f mousePos = static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace));
+			unsigned int dist = getDistSq(lastSelected->getShape()->getPosition(), mousePos);
+			unsigned int maxRocketsToShoot = std::clamp((dist / 2000), 0U, (unsigned int)lastSelected->power);
+			sf::Vector2f offset = sf::Vector2f(10, 10);
+			mouseText.text.setPosition(static_cast<sf::Vector2f>(mousePos) + offset);
+			mouseText.text.setCharacterSize(20 * log(maxRocketsToShoot) + 14);
+			mouseText.text.setString(std::to_string(maxRocketsToShoot));
+		}
+	}
 }
 
 void ObjectManager::respondEvents(sf::Event e) {
-
+	//bool clickedPlanet = false;
 	if(e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Button::Left) {
-		bool clickedPlanet = false;
+		clickedPlanet = false;
 		for(auto& p : planets) {
-
 			if(p.hitbox.contains(static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)))) {
 				if(lastSelected != nullptr)
 					lastSelected->getShape()->setFillColor(sf::Color::White);
 				lastSelected = &p;
 				lastSelected->getShape()->setFillColor(sf::Color::Green);
 				clickedPlanet = true;
+				break;
 			}
 		}
-
+		if(!clickedPlanet && lastSelected != nullptr)
+			mouseText.toDraw = true;
+	}
+	else if(e.type == sf::Event::MouseButtonReleased && e.mouseButton.button == sf::Mouse::Left) {
 		if(!clickedPlanet && lastSelected != nullptr) {
-			Rocket* r = new Rocket(lastSelected, 
-								   lastSelected->getShape()->getPosition(),
-								   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
-								   100.f);
-			r->setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Rocket, getRandBetween(0, 5)));
-			rockets.push_back(r);
-			objectsToDrawPtr->push_back(r);
+			float lastRad = lastSelected->getShape()->getRadius() - 5.f;
+			float dist = getDistSq(lastSelected->getShape()->getPosition(), static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)));
+			unsigned int maxToShoot = std::clamp((unsigned int)(dist / 2000), 0U, (unsigned int)lastSelected->power);
+			for(int i = 0; i < maxToShoot; i++) {
+				sf::Vector2f offset = sf::Vector2f(getRandBetween(-lastRad, lastRad), getRandBetween(-lastRad, lastRad));
+				Rocket* r = new Rocket(lastSelected,
+									   lastSelected->getShape()->getPosition() + offset,
+									   static_cast<sf::Vector2f>(Object::inputSystem->getMousePos(Space::WorldSpace)) - lastSelected->getShape()->getPosition(),
+									   100.f);
+				r->setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Rocket, getRandBetween(0, 5)));
+				rockets.push_back(r);
+				objectsToDrawPtr->push_back(r);
+				lastSelected->rocketLaunch();
+			}
+			mouseText.toDraw = false;
 			lastSelected->getShape()->setFillColor(sf::Color::White);
 			lastSelected = nullptr;
 		}

@@ -85,3 +85,13 @@ void Body::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(shape, states);
 	target.draw(powerText, states);
 }
+
+void Body::rocketHit() {
+	power++;
+	powerText.setString(std::to_string(power));
+}
+
+void Body::rocketLaunch() {
+	power--;
+	powerText.setString(std::to_string(power));
+}

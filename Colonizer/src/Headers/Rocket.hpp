@@ -17,7 +17,7 @@ private:
 	sf::Sprite shape;
 	sf::Vector2f velocity;
 
-	int dieCtr = 3 * config::window::framerate;
+	int dieCtr = config::window::framerate;
 
 public:
 	ObjectTag tag = ObjectTag::Rocket;

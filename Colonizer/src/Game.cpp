@@ -40,7 +40,8 @@ void Game::mainLoop() {
 		gWindow.setView(gCamera);
 
 		for(auto& i : objectsToDraw) {
-			gWindow.draw(*i);
+			if(i->toDraw)
+				gWindow.draw(*i);
 		}
 
 		gWindow.setView(gWindow.getDefaultView());

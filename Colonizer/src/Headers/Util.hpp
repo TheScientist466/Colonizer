@@ -12,7 +12,8 @@ enum class ObjectTag {
 	PureObject,
 	Body, 
 	Sun,
-	Rocket
+	Rocket,
+	Text
 };
 
 class Input {
