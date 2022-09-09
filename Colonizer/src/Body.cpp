@@ -3,6 +3,7 @@
 #include "Util.hpp"
 
 #include <iostream>
+#include <string>
 
 Body::Body() : radius(0), shape(0)
 {}
@@ -26,6 +27,14 @@ Body::Body(float _rad, sf::Vector2f _pos, std::string _name) :
 
 	rotationSpeed = getRandBetween(30, 180);
 	rotationSpeed *= getRandBetween(-100, 100) < 0 ? -1 : 1;
+
+	power = getRandBetween(1, 20);
+	if(Object::defaultFont != nullptr) {
+		powerText = sf::Text(std::to_string(power), *Object::defaultFont, _rad);
+		powerText.setFillColor(sf::Color::White);
+		powerText.setPosition(_pos - sf::Vector2f(_rad / 2, _rad / 2));
+		powerText.setStyle(sf::Text::Bold);
+	}
 }
 
 sf::CircleShape* Body::getShape() {
@@ -70,4 +79,9 @@ void Body::setTextureRect(sf::Texture* t, sf::IntRect r, sf::Color c) {
 	shape.setTextureRect(r);
 
 	miniShape.setFillColor(c);
+}
+
+void Body::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(shape, states);
+	target.draw(powerText, states);
 }

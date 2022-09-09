@@ -10,6 +10,7 @@ class Body : public Object{
 public:
 	std::string name;
 	ObjectTag tag = ObjectTag::Body;
+	sf::Text powerText;
 
 private:
 	float radius;
@@ -20,7 +21,7 @@ private:
 
 	int power;
 	float powerIncreaseRate;
-
+	
 
 public:
 	Body();
@@ -36,4 +37,7 @@ public:
 
 	void update();
 	void respondEvents(sf::Event e);
+
+private:
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

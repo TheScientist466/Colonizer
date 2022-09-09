@@ -32,4 +32,7 @@ public:
 	void update();
 	void setTexture(sf::Texture* t);
 	void setTextureRect(sf::Texture* t, sf::IntRect r);
+
+private:
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

@@ -4,7 +4,7 @@
 
 #include "Util.hpp"
 
-struct Object {
+struct Object : public sf::Drawable {
 
 public:
 	ObjectTag tag = ObjectTag::PureObject;
@@ -12,6 +12,7 @@ public:
 	static sf::Time deltaTime;
 	static Input* inputSystem;
 	static TextureManager* textureManager;
+	static sf::Font* defaultFont;
 	sf::FloatRect hitbox;
 
 	bool miniDraw;
@@ -24,4 +25,7 @@ public:
 	virtual sf::Drawable* getMiniShape();
 	virtual void update();
 	virtual void respondEvents(sf::Event e);
+
+protected:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

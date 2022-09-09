@@ -61,3 +61,7 @@ void Rocket::setTextureRect(sf::Texture* t, sf::IntRect r) {
 	shape.setTextureRect(r);
 	shape.setScale(.08, .08);
 }
+
+void Rocket::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(shape, states);
+}

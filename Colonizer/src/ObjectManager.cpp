@@ -16,8 +16,13 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 	_texMgrPtr = new TextureManager("./Assets/mainTexture.png");
 	Object::textureManager = _texMgrPtr;
 
+	Object::defaultFont = new sf::Font();
+	Object::defaultFont->loadFromFile("./Assets/Comfortaa-VariableFont_wght.ttf");
+
 	sun = Body(100, sf::Vector2f(0, 0), "SUN");
 	sun.setTextureRect(Object::textureManager->getTexture(), Object::textureManager->getRect(ObjectTag::Sun, 0), Object::textureManager->getMinimapColor(ObjectTag::Sun, 0));
+
+	planets.push_back(sun);
 
 	srand((unsigned int)time(0));
 	for(unsigned int i = 0; i < numOfPlanets; i++) {
@@ -75,7 +80,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 			continue;
 		}
 	}
-	objectsToDrawPtr->push_back(&sun);
+	//objectsToDrawPtr->push_back(&sun);
 
 	for(auto& a : planets)
 		objectsToDrawPtr->push_back(&a);
@@ -86,6 +91,7 @@ ObjectManager::ObjectManager(std::vector<Object*>* _objToDrawPtr, TextureManager
 ObjectManager::~ObjectManager() {
 	for(auto a : rockets)
 		delete a;
+	delete Object::defaultFont;
 }
 
 void ObjectManager::update() {
