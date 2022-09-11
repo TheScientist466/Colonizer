@@ -33,3 +33,26 @@ sf::Drawable* TextObject::getMiniShape() {
 sf::Drawable* TextObject::getShape() {
 	return &text;
 }
+
+Line::Line(sf::Vector2f _a, sf::Vector2f _b) :
+	line(sf::LinesStrip, 2),
+	toDraw(true),
+	miniDraw(false)
+{
+	line[0].position = _a;
+	line[1].position = _b;
+}
+
+sf::Drawable* Line::getShape() {
+	return &line;
+}
+
+sf::Drawable* Line::getMiniShape() {
+	return &line;
+}
+
+void Line::draw(sf::RenderTarget& _t, sf::RenderStates _s) const {
+	if(toDraw)
+		_t.draw(line, _s);
+}
+

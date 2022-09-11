@@ -13,7 +13,8 @@ enum class ObjectTag {
 	Body, 
 	Sun,
 	Rocket,
-	Text
+	Text,
+	Line
 };
 
 class Input {

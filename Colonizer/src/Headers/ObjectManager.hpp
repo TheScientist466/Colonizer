@@ -16,6 +16,7 @@ private:
 	std::vector<Rocket*> rockets;
 	Body sun;
 	TextObject mouseText;
+	Line mouseLine;
 
 	std::vector<Object*>* objectsToDrawPtr;
 	Body* lastSelected;

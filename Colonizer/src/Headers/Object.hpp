@@ -37,8 +37,22 @@ public:
 	ObjectTag tag = ObjectTag::Text;
 	sf::Text text;
 	TextObject(sf::Font& f = *Object::defaultFont);
-	virtual sf::Drawable* getShape();
-	virtual sf::Drawable* getMiniShape();
+	sf::Drawable* getShape();
+	sf::Drawable* getMiniShape();
+	bool toDraw;
+	bool miniDraw;
+
+private:
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+};
+
+class Line : public Object {
+public:
+	ObjectTag tag = ObjectTag::Line;
+	sf::VertexArray line;
+	Line(sf::Vector2f a = sf::Vector2f(0, 0), sf::Vector2f b = sf::Vector2f(0, 0));
+	sf::Drawable* getShape();
+	sf::Drawable* getMiniShape();
 	bool toDraw;
 	bool miniDraw;
 
