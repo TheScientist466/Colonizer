@@ -17,7 +17,7 @@ The project is pretty much set up, with the `.sln` file present in the root of t
 ##### Prerequisites:
 + SFML library
     - Install from your distribution's package repository
-    - Get [source code](https://github.com/SFML/SFML), build it and intall it
+    - Get [source code](https://github.com/SFML/SFML), build it and install it
     - Download the precompiled SDK and manually copy the files
 + CMake
 + A C/C++ compiler which CMake can generate build file for (eg:- GNU g++)
