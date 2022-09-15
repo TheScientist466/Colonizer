@@ -25,19 +25,19 @@ The project is pretty much set up, with the `.sln` file present in the root of t
 ##### Installing library from distribution's package repositories (preffered)
 Most big distribution will have sfml in their official repositories.
 
-######For Debian/Ubuntu based distributions it would be:
+###### For Debian/Ubuntu based distributions it would be:
 
 ```
 sudo apt-get update
 sudo apt-get install libsfml-dev
 ```
 
-######For Arch based distributions it would be:
+###### For Arch based distributions it would be:
 ```
 sudo pacman -Sy sfml
 ```
 
-######For Fedora based distributions it would be:
+###### For Fedora based distributions it would be:
 ```
 sudo dnf makecache --refresh
 sudo dnf install SFML
@@ -58,7 +58,7 @@ Continue from **Building anywhere with CMake**
 Below are some examples to generate build files with CMake and building them with a compiler. CMake envionment variables and options should be set according to **your system**
 
 ##### Building Examples
-######Arch linux with SFML installed from official repos and compiler set to GNU g++
+###### Arch linux with SFML installed from official repos and compiler set to GNU g++
 ```
 mkdir build && cd build
 cmake -G "Unix Makefiles" ..
