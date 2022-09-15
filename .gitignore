@@ -366,3 +366,4 @@ FodyWeavers.xsd
 ./Colonizer/Temp_Assets/
 /Colonizer/Temp_Assets
 /build/
+/.vscode/
