@@ -2,7 +2,7 @@
 
 **Try to colonize the whole star system before the enemy does!**
 
-![Main Game Image](Screenshots/MainGame.png)
+![Main Game Image](Images/MainGame.png)
 
 ---
 
