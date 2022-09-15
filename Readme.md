@@ -2,6 +2,10 @@
 
 **Try to colonize the whole star system before the enemy does!**
 
+![Main Game Image](Screenshots/MainGame.png)
+
+---
+
 ## Build
 Clone the repository
 ```
@@ -44,7 +48,7 @@ sudo dnf install SFML
 ```
 
 ##### Building
-Continue from **Building anywhere with CMake**
+Continue from [Building anywhere with CMake](https://github.com/TheScientist466/Colonizer#building-anywhere-with-cmake)
 
 ### Building anywhere with CMake
 ##### Prerequisites:
@@ -66,3 +70,4 @@ make
 ./Colonizer
 ```
 
+---
