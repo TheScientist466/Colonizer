@@ -13,14 +13,19 @@ Game::Game() :
 	gWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Title", config::window::TO_FULLSCREEN ? sf::Style::Fullscreen : sf::Style::Close, sf::ContextSettings(0, 0, 2))),
 	gCamera(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)),
 	inputSystem(&gWindow, &gCamera),
-	objMgr(&objectsToDraw),
+	objMgr(&objectsToDraw, texMgr),
 	uiMgr(&gWindow, &gCamera),
-	minimap(&objectsToDraw, &gCamera)
+	minimap(&objectsToDraw, &gCamera, false)
 {
-	gWindow.setFramerateLimit(60);
+	gWindow.setFramerateLimit(config::window::framerate);
 	Object::inputSystem = &inputSystem;
-	
+
 	gCamera.setCenter(sf::Vector2f(0, 0));
+	minimap.update(true);
+}
+
+Game::~Game() {
+	delete texMgr;
 }
 
 void Game::mainLoop() {
@@ -34,8 +39,10 @@ void Game::mainLoop() {
 		update();
 		gWindow.setView(gCamera);
 
-		for(auto& i : objectsToDraw)
-			gWindow.draw(*(i->getShape()));
+		for(auto& i : objectsToDraw) {
+			if(i->toDraw)
+				gWindow.draw(*i);
+		}
 
 		gWindow.setView(gWindow.getDefaultView());
 
@@ -50,6 +57,8 @@ void Game::mainLoop() {
 
 void Game::respondEvents() {
 	sf::Event buffer = inputSystem.getEvent();
+
+	objMgr.respondEvents(buffer);
 
 	for(auto& a : objectsToDraw) {
 		a->respondEvents(buffer);
@@ -66,6 +75,12 @@ void Game::respondEvents() {
 			break;
 		case sf::Event::KeyReleased:
 			cameraMovement(buffer.key.code, true);
+			break;
+		case sf::Event::MouseButtonPressed:
+			mouseLastPressed = inputSystem.getMousePos(Space::WorldSpace);
+			break;
+		case sf::Event::MouseButtonReleased:
+			minimap.update(true);
 			break;
 	}
 }
@@ -87,10 +102,15 @@ void Game::cameraMovement(sf::Keyboard::Key _k, bool _isReleased) {
 }
 
 void Game::update() {
-	gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
+	if(!sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle)) {
+		gCamera.move(static_cast<sf::Vector2f>(gCameraDir) * gCameraSpeed * Object::deltaTime.asSeconds());
+		if(gCameraDir != ZERO_VECTOR2)
+			minimap.update(true);
+	}
+	else
+		gCamera.move(static_cast<sf::Vector2f>(mouseLastPressed - inputSystem.getMousePos(Space::WorldSpace)));
 
-	for(auto& i : objectsToDraw)
-		i->update();
+	objMgr.update();
 	minimap.update();
 	uiMgr.update();
 }

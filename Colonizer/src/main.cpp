@@ -1,7 +1,13 @@
 #include "Game.hpp"
+#include "MainMenu/MainMenu.hpp"
 
 int main() {
-	Game* g = new Game();
-	g->mainLoop();
-	delete g;
+	MainMenu* m = new MainMenu();
+	m->Loop();
+	if(m->toStartGame) {
+		Game* g = new Game();
+		g->mainLoop();
+		delete g;
+	}
+	delete m;
 }

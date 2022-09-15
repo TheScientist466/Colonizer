@@ -14,6 +14,7 @@ class Game {
 
 public:
 	Game();
+	~Game();
 
 public:
 	std::vector<Object*> objectsToDraw;
@@ -24,12 +25,14 @@ private:
 	sf::Vector2i gCameraDir;
 	float gCameraSpeed = 400.f;
 	sf::Clock gClock;
+	sf::Vector2i mouseLastPressed;
 
 	Minimap minimap;
 
 	UiManager uiMgr;
 	Input inputSystem;
 	ObjectManager objMgr;
+	TextureManager* texMgr;
 
 public:
 	void mainLoop();
