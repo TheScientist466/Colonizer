@@ -362,8 +362,16 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+<<<<<<< HEAD
+build/
+.vscode/
+=======
 #Temp files
 ./Colonizer/Temp_Assets/
 /Colonizer/Temp_Assets
 /build/
+<<<<<<< HEAD
 /.vscode/
+=======
+>>>>>>> origin/master
+>>>>>>> origin/Docs
